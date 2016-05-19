@@ -1,0 +1,11 @@
+.game-row {
+    display: block;
+    height: 40px;
+}
+
+.game-col {
+    display:block;
+    width: 40px;
+    float: left;
+}
+

@@ -1,5 +1,8 @@
 <p>
   slider-game works!
 </p>
-<slider-game-piece *ngFor="let gamePiece of gamePieces" [gamePiece]="gamePiece">
-</slider-game-piece>
+<div class="game-row" *ngFor="let gameRow of gameRows">
+  <div class="game-col" *ngFor="let spot of gameRow.columns">
+    {{ spot.row }}, {{ spot.column}}
+  </div>
+</div>
