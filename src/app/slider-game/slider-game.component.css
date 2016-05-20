@@ -1,11 +1,13 @@
 .game-row {
     display: block;
-    height: 40px;
+    height: 60px;
+    line-height: 60px;
+    width: 180px;
 }
 
 .game-col {
     display:block;
-    width: 40px;
+    width: 60px;
     float: left;
 }
 

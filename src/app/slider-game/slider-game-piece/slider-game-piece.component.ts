@@ -12,7 +12,7 @@ export class SliderGamePieceComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.gamePiece);
+
   }
 
 }

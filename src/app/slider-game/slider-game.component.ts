@@ -12,6 +12,7 @@ import {SliderGamePiece} from '../shared/slider-game-piece.class';
 export class SliderGameComponent implements OnInit {
   gamePieces: SliderGamePiece[] = [];
   gameRows: SliderGameBoardRow[] = [];
+  emptyLocation: SliderGameBoardSpot;
 
   numberOfPieces: number;
   numberOfRows: number;
@@ -24,17 +25,29 @@ export class SliderGameComponent implements OnInit {
 
   ngOnInit() {
     // Create game board spots
+    let gamePieceNumber = 0;
     for(let row = 0; row < this.numberOfRows; row++) {
       let columns = [];
       for(let col = 0; col < this.numberOfColumns; col++) {
         let spot = new SliderGameBoardSpot(row, col);
+        spot.gamePiece = new SliderGamePiece(gamePieceNumber);
+        if (gamePieceNumber === 0) {
+          this.emptyLocation = spot;
+        }
         columns.push(spot);
+        gamePieceNumber++;
       }
       this.gameRows.push(new SliderGameBoardRow(columns, row));
     }
-    // Create game pieces
-    for(var myNumber = 1; myNumber < this.numberOfPieces; myNumber++) {
-      this.gamePieces.push(new SliderGamePiece(myNumber.toString(), myNumber-1));
+  }
+
+  pieceClicked(spot: SliderGameBoardSpot) {
+    if(spot.isAdjacent(this.emptyLocation)) {
+      // Switch spots
+      let emptyPiece = this.emptyLocation.gamePiece;
+      this.emptyLocation.gamePiece = spot.gamePiece;
+      spot.gamePiece = emptyPiece;
+      this.emptyLocation = spot;
     }
   }
 
@@ -50,5 +63,20 @@ class SliderGameBoardSpot {
   public gamePiece:SliderGamePiece;
   constructor(public row:number, public column:number){
     console.log('game spot: ' + row + ',' + column);
+  }
+
+  /**
+   * Determines if spot is adjacent to another spot
+   */
+  isAdjacent(spot: SliderGameBoardSpot) :boolean {
+    if (this.row === spot.row && this.column === spot.column) {
+      return false; // Same spot is not adjacent
+    }
+    let rowDiff = Math.abs(this.row - spot.row);
+    let colDiff = Math.abs(this.column - spot.column);
+    if (rowDiff !== 2 && colDiff !== 2 && (rowDiff === 0 || colDiff === 0)) {
+      return true;
+    }
+    return false;
   }
 }
