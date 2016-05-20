@@ -1,0 +1,6 @@
+<div class="game-row" *ngFor="let gameRow of gameRows">
+  <div class="game-col" *ngFor="let spot of gameRow.columns">
+    <slider-game-piece (click)="pieceClicked(spot)" [gamePiece]="spot.gamePiece">
+    </slider-game-piece>
+  </div>
+</div>
